@@ -49,7 +49,7 @@
 			<!-- Work -->
 			<article id="work">
 				<h2 class="major">Projects</h2>
-			
+
 				<!-- Raspberry Pi Security Camera -->
 				<section class="project">
 					<h3 class="major">Raspberry Pi Security Camera</h3>
@@ -57,15 +57,17 @@
 						<img src="images/Security1.png" alt="Security Camera Screenshot 1" class="project-image" />
 						<img src="images/Security2.png" alt="Security Camera Screenshot 2" class="project-image" />
 					</div>
-					<p> The Raspberry Pi Security Camera is a Python-based surveillance system that streams live video over a network from a Raspberry Pi using picamera2. A client device can view and record the feed using OpenCV, with optional motion detection recording for enhanced security. 
+					<p>The Raspberry Pi Security Camera is a Python-based surveillance system that streams live video over a network from a Raspberry Pi using picamera2. A client device can view and record the feed using OpenCV, with optional motion detection recording for enhanced security. 
 						Users can configure frame rate and resolution to optimize performance, and the system supports cross-platform compatibility across Windows, Mac, and Linux.</p>
 					<ul class="actions">
 						<li><a href="https://github.com/ChrystyanPulidoLuna/Raspberry-Pi-Security-Camera" class="button">Learn More</a></li>
 					</ul>
 				</section>
+
 				<!-- Small Separation -->
 				<hr class="divider" />
-				<!-- Salary Calculator Project -->			
+
+				<!-- Salary Calculator Project -->
 				<section class="project">
 					<h3 class="major">Salary Calculator</h3>
 					<div class="image-container">
@@ -78,29 +80,34 @@
 						<li><a href="https://github.com/chrystyanpulidoluna/Salary-Calculator" class="button">Learn More</a></li>
 					</ul>
 				</section>
+			</article>
 
 			<!-- Contact -->
 			<article id="contact">
 				<h2 class="major">Contact</h2>
-				<form method="post" action="https://formspree.io/f/manqygrl">
+				<form method="post" action="#" onsubmit="return submitForm(event);">
 					<div class="fields">
 						<div class="field half">
 							<label for="name">Name</label>
-							<input type="text" name="name" id="name" />
+							<input type="text" name="name" id="name" required />
 						</div>
 						<div class="field half">
 							<label for="email">Email</label>
-							<input type="text" name="email" id="email" />
+							<input type="email" name="email" id="email" required />
 						</div>
 						<div class="field">
 							<label for="message">Message</label>
-							<textarea name="message" id="message" rows="4"></textarea>
+							<textarea name="message" id="message" rows="4" required></textarea>
 						</div>
 					</div>
 					<ul class="actions">
 						<li><input type="submit" value="Send Message" class="primary" /></li>
+						<li><input type="reset" value="Reset" /></li>
 					</ul>
 				</form>
+				<ul class="icons">
+					<li><a href="https://github.com/chrystyanpulidoluna" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
 			</article>
 		</div>
 
@@ -119,6 +126,47 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	
+	<!-- Form Submission Script -->
+	<script>
+	function submitForm(event) {
+		event.preventDefault();
+		const form = event.target;
+		const formData = new FormData(form);
+		
+		// Disable submit button and show loading state
+		const submitButton = form.querySelector('input[type="submit"]');
+		const originalText = submitButton.value;
+		submitButton.value = 'Sending...';
+		submitButton.disabled = true;
+		
+		fetch('https://formspree.io/f/manqygrl', {
+			method: 'POST',
+			body: formData,
+			headers: {
+				'Accept': 'application/json'
+			}
+		}).then(response => {
+			if (response.ok) {
+				// Show success message
+				alert('Message sent successfully! I will get back to you soon.');
+				form.reset();
+			} else {
+				// Show error message
+				alert('There was an error sending your message. Please try again.');
+			}
+		}).catch(error => {
+			// Show error message
+			alert('There was an error sending your message. Please try again.');
+		}).finally(() => {
+			// Re-enable submit button and restore original text
+			submitButton.value = originalText;
+			submitButton.disabled = false;
+		});
+		
+		return false;
+	}
+	</script>
 
 </body>
 </html>
